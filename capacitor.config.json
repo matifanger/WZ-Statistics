@@ -1,6 +1,6 @@
 {
   "appId": "com.example.app",
-  "appName": "kd-calculator",
+  "appName": "WZ-Statistics",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "dist",

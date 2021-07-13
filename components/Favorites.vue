@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     getUserEmit(index) {
-      console.log("emmited");
+      // ! console.log("emmited");
       this.$emit("searchQueryEmmited", this.favorites[index]);
       this.$emit("getUserEmitted");
     },

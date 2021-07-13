@@ -90,7 +90,7 @@ export default {
       this.searchQuery = args
     },
     getUser() {
-      console.log("received")
+      // ! console.log("received")
       if (this.searchQuery == null) {
         return;
       }

@@ -2,9 +2,8 @@ const COD = require('call-of-duty-api')({
   platform: "battle"
 });
 
-const email = 'matzenwow@gmail.com'
-const password = 'm9w*tDQ*mJ15mvP&'
-const test = process.env.WARZONE_PASS
+const email = process.env.WARZONE_EMAIL
+const password = process.env.WARZONE_PASS
 
 exports.handler = async (event) => {
   try {
