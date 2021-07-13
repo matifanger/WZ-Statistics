@@ -13,13 +13,13 @@ exports.handler = async (event) => {
     // ! console.log(test)
     return {
       statusCode: 200,
-      body: JSON.stringify(data)
+      body: JSON.stringify(password)
     }
   } catch (error) {
     // ! console.log(test)
     return {
       statusCode: 200,
-      body: JSON.stringify(error)
+      body: JSON.stringify(password)
     }
   }
 }
