@@ -50,7 +50,7 @@ export default {
     if (localStorage.getItem("favorites")) {
       try {
         let favorites = JSON.parse(localStorage.getItem("favorites"));
-        if (favorites.includes(this.username) || this.username == '' ) {
+        if (favorites.includes(this.username) || this.username == null ) {
           return false
         }
       } catch (e) {
