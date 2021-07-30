@@ -46,17 +46,16 @@
       </v-card>
     <!--END SEARCH BAR -->
     <client-only><Favorites :username="this.searchQuery" @searchQueryEmmited="searchQueryChange" @getUserEmitted="getUser" /></client-only>
-    
 
-    <v-card class="flex-container" v-if="searchQuerySuccess == true">
+    <v-card class="flex-container pb-4" v-if="searchQuerySuccess == true">
   <v-row>
-    <v-col class="d-flex flex-wrap justify-center" align="center">
-      <v-card width="10em" height="6em" id="green" class="flex-item"><p style="color:white; font-size:20px" class="pt-3 ml-3 mr-3">KD<br/>{{playerData.kdRatio}}</p></v-card>
-      <v-card width="10em" height="6em" id="pink" class="flex-item"><p style="color:white; font-size:20px" class="pt-3 ml-3 mr-3">NEXT KD<br/>{{nextKd}}</p></v-card>
-      <v-card width="10em" height="6em" id="red" class="flex-item"><p style="color:white; font-size:20px" class="pt-3 ml-3 mr-3">WINS<br/>{{playerData.wins}}</p></v-card>
-      <v-card width="10em" height="6em" id="black" class="flex-item"><p style="color:white; font-size:20px" class="pt-3 ml-3 mr-3">TIME PLAYED<br/>{{playerData.timePlayed}} HS</p></v-card>
-      <v-card width="10em" height="6em" id="blue" class="flex-item"><p style="color:white; font-size:20px" class="pt-3 ml-3 mr-3">KILLS<br/>{{playerData.kills}}</p></v-card>
-      <v-card width="10em" height="6em" id="yellow" class="flex-item"><p style="color:white; font-size:20px" class="pt-3 ml-3 mr-3">DEATHS<br/>{{playerData.deaths}}</p></v-card> 
+    <v-col class="d-flex flex-wrap justify-center mt-4" align="center">
+      <v-card width="10em" height="6em" id="green" class="flex-item"><p style="color:white; font-size:20px" class="pt-3 ny-3">KD<br/>{{playerData.kdRatio}}</p></v-card>
+      <v-card width="10em" height="6em" id="pink" class="flex-item"><p style="color:white; font-size:20px" class="pt-3 ny-3">NEXT KD<br/>{{nextKd}}</p></v-card>
+      <v-card width="10em" height="6em" id="red" class="flex-item"><p style="color:white; font-size:20px" class="pt-3 ny-3">WINS<br/>{{playerData.wins}}</p></v-card>
+      <v-card width="10em" height="6em" id="black" class="flex-item"><p style="color:white; font-size:20px" class="pt-3 ny-3">TIME PLAYED<br/>{{playerData.timePlayed}} HS</p></v-card>
+      <v-card width="10em" height="6em" id="blue" class="flex-item"><p style="color:white; font-size:20px" class="pt-3 ny-3">KILLS<br/>{{playerData.kills}}</p></v-card>
+      <v-card width="10em" height="6em" id="yellow" class="flex-item"><p style="color:white; font-size:20px" class="pt-3 ny-3">DEATHS<br/>{{playerData.deaths}}</p></v-card> 
     </v-col>
     </v-row>
   </v-card>
@@ -79,7 +78,7 @@ export default {
       newsearchQuery: null,
       searchQuerySuccess: false,
       loadingSearch: false,
-      playerdata: null,
+      playerData: null,
       nextKd: null,
       errorlog: "",
       errorlevel: "",
@@ -98,32 +97,35 @@ export default {
       this.loadingSearch = true;
       this.newsearchQuery = this.searchQuery.replace("#", "%23");
       this.$router.push(`/?search=${this.newsearchQuery}`);
-      axios.get('/api/wzrequest', { params: { ID: this.searchQuery } }).then((res) => {
+      axios.get('API/wzrequest', { params: { ID: this.searchQuery } }).then((res) => {
         if(res.status == 200) {
           if(res.data == "404 - Not found. Incorrect username or platform? Misconfigured privacy settings?") {
             this.errorlevel = "warning"
             this.errorlog = "404 - Not found. Incorrect username or platform? Misconfigured privacy settings?"
+            this.loadingSearch = false;
           }
         else if(res.status != 200) {
           this.errorlog = "Internal server error! contact admin ig: @matzenzinho or try later."
+          this.loadingSearch = false;
           }
           else if(res.data == "401 - Unauthorized. Incorrect username or password.") {
             this.errorlevel = "error"
             this.errorlog = "Internal server error! contact admin ig: @matzenzinho or try later."
+            this.loadingSearch = false;
           }
         else {
           this.errorlog = ""
-          console.log('working =>', res)
+          // ! console.log('working =>', res)
+          this.playerData = res.data
           res.data.br.timePlayed = (res.data.br.timePlayed/3600).toFixed(2)
           res.data.br.kdRatio = res.data.br.kdRatio.toFixed(2)
           this.playerData = res.data.br
           this.searchQuerySuccess = true;
+          this.loadingSearch = false;
           this.calculateNextKd()
           }
         }
-        console.log(res);
       });
-      this.loadingSearch = false;
     },
     calculateNextKd () {
       var nextkdnum = parseFloat(this.playerData.kdRatio)+0.01
