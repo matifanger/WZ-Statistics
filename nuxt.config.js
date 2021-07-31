@@ -10,7 +10,7 @@ export default {
   },
 
   // Target (https://go.nuxtjs.dev/config-target)
-  target: 'static',
+  target: 'server',
 
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
@@ -26,9 +26,9 @@ export default {
     ]
   },
 
-  // serverMiddleware: [
-  //   { path: '/API', handler: '~/server-middleware/wzreq'}, 
-  // ],
+  serverMiddleware: [
+    { path: '/API', handler: '~/server-middleware/rest.js'}, 
+  ],
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [

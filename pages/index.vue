@@ -89,7 +89,6 @@ export default {
       this.searchQuery = args
     },
     getUser() {
-      // ! console.log("received")
       if (this.searchQuery == null) {
         return;
       }
@@ -97,7 +96,7 @@ export default {
       this.loadingSearch = true;
       this.newsearchQuery = this.searchQuery.replace("#", "%23");
       this.$router.push(`/?search=${this.newsearchQuery}`);
-      axios.get('API/wzrequest', { params: { ID: this.searchQuery } }).then((res) => {
+      axios.get('/API/wzrequest', { params: { ID: this.searchQuery } }).then((res) => {
         if(res.status == 200) {
           if(res.data == "404 - Not found. Incorrect username or platform? Misconfigured privacy settings?") {
             this.errorlevel = "warning"
@@ -116,16 +115,16 @@ export default {
         else {
           this.errorlog = ""
           // ! console.log('working =>', res)
-          this.playerData = res.data
-          res.data.br.timePlayed = (res.data.br.timePlayed/3600).toFixed(2)
-          res.data.br.kdRatio = res.data.br.kdRatio.toFixed(2)
-          this.playerData = res.data.br
+          this.playerData = res.data.body.br
+          this.playerData.timePlayed = (this.playerData.timePlayed/3600).toFixed(2)
+          this.playerData.kdRatio = this.playerData.kdRatio.toFixed(2)
           this.searchQuerySuccess = true;
           this.loadingSearch = false;
           this.calculateNextKd()
           }
         }
-      });
+      }
+      );
     },
     calculateNextKd () {
       var nextkdnum = parseFloat(this.playerData.kdRatio)+0.01
