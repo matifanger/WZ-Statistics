@@ -1,4 +1,4 @@
-const COD = require('call-of-duty-api')({});
+
 
 const sso_token = process.env.SSO_TOKEN
 
