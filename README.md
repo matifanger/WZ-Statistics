@@ -6,7 +6,8 @@
 
 # TRY IT 🚀
 [Website](https://wz-statistics.herokuapp.com/)
-[Demo](https://wz-statistics.herokuapp.com/?search=MATZENZINHO%234699654)
+
+[Test with my ID](https://wz-statistics.herokuapp.com/?search=MATZENZINHO%234699654)
 
 # Description
 App to see your stats in COD Warzone and calculate your next kd.
